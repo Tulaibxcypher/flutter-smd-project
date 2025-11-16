@@ -42,13 +42,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
       setState(() => _isLoading = false);
 
       if (error == null) {
+        // Success - Show verification message
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              content: Text('Account created successfully!'),
+              content: Text(
+                'Account created! Please check your email to verify your account.',
+                style: TextStyle(fontSize: 14),
+              ),
               backgroundColor: Colors.green,
+              duration: Duration(seconds: 5),
             ),
           );
+
+          // Wait 2 seconds then go back to login
+          await Future.delayed(const Duration(seconds: 2));
+          if (mounted) {
+            Navigator.pop(context); // Go back to login screen
+          }
         }
       } else {
         // Show error
@@ -57,6 +68,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             SnackBar(
               content: Text(error),
               backgroundColor: AppConstants.errorColor,
+              duration: const Duration(seconds: 4),
             ),
           );
         }

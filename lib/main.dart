@@ -4,11 +4,15 @@ import 'package:flutter_login/screens/auth/Login.dart';
 import 'package:flutter_login/screens/auth/Sign_up.dart';
 import 'package:flutter_login/utilis/constraints.dart';
 
+import 'firebase_optons.dart';
+
 void main() async {
-  //ensuring for flutter intialization
   WidgetsFlutterBinding.ensureInitialized();
-//initializing fire base
-  await Firebase.initializeApp();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform, // ← Use this
+  );
+
   runApp(const MyApp());
 }
 
@@ -36,7 +40,6 @@ class MyApp extends StatelessWidget {
       ),
       home: const LoginScreen(),
       routes: {
-        //routes
         '/login': (context) => const LoginScreen(),
         '/signup': (context) => const SignUpScreen(),
       },
